@@ -39,7 +39,9 @@ class addRestaurants extends Command
      */
     public function handle()
     {
-
+        /*
+            Get Restaurants from CityListingJson Table and add in Restaurants Table
+        */
         $data = CityListingJson::where('is_copied', 0)->with('city')->get();
         foreach ($data as $key => $d) {
 
