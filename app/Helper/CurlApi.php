@@ -121,7 +121,9 @@ class CurlApi
         return $response;
 
     }
-
+    /*
+        reading a csv file and turning into an array helper function
+    */
     public static function csvToArray($filename = '', $delimiter = ',')
     {
         if (!file_exists($filename) || !is_readable($filename))
