@@ -62,6 +62,12 @@ class CurlApi
         return $response;
 
     }
+    /*
+        Get Search Results Rapid API
+        It searches for restaurants based on the location id
+        Expects Location Id and Offset
+        By default api returns 50 resualts at max
+    */
     public static function getSearchResult($locationId,$offset=0)
     {
         $curl = curl_init();
