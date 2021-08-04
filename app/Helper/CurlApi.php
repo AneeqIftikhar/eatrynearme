@@ -30,6 +30,8 @@ class CurlApi
     }
     /*
         Get Location Id From Rapid API Curl Request
+        It searches for the City from Name and returns the Id
+        That Id will be used to make a new request to get restaurants
     */
     public static function getLocationId($name)
     {
