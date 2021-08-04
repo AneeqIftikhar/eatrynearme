@@ -28,6 +28,9 @@ class CurlApi
         return $response;
 
     }
+    /*
+        Get Location Id From Rapid API Curl Request
+    */
     public static function getLocationId($name)
     {
         $curl = curl_init();
