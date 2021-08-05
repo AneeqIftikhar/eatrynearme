@@ -3,6 +3,9 @@ namespace App\Helper;
 
 class CurlApi
 {
+    /*
+        Get Images From Restaurant Globe API Curl Request
+    */
     public static function getGlobeImage($state,$city,$restaurant)
     {
         $curl = curl_init();
