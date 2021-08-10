@@ -30,6 +30,8 @@ class Restaurants extends Model
         'image_tripadvisor',
         'image',
         'location_id',
+        'is_deleted',
+        'is_deleted_checked'
     ];
 
     public function city(){

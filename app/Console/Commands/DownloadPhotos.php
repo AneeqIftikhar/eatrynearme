@@ -38,7 +38,7 @@ class DownloadPhotos extends Command
      */
     public function handle()
     {
-        $data = Restaurants::where('image_tripadvisor', '!=', null)->where('image', null)->limit(5)->get();
+        $data = Restaurants::where('image_tripadvisor', '!=', null)->where('is_deleted', 0)->where('image', null)->limit(5)->get();
 //        dd($data->count());
         if ($data->count() > 0) {
 

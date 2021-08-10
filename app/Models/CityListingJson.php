@@ -13,4 +13,7 @@ class   CityListingJson extends Model
         'status',
         'city_id'
     ];
+    public function city(){
+        return $this->belongsTo(City::class);
+    }
 }

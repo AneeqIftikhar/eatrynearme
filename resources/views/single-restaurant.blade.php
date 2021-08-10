@@ -132,7 +132,9 @@
                         @foreach($getRes->globeImage as $menu)
 
                         <div class="col-sm-4  text-center mt-3">
+                            <a href="{{ $menu->url }}" target="_blank" title="View Menu">
                             <img loading="lazy" src="{{ $menu->url }}" class="img-fluid" title="{{$menu->title}}" alt="{{$menu->alt}}">
+                            </a>
                         </div>
                         @endforeach
                     @endif

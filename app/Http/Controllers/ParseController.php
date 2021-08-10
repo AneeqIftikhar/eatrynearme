@@ -60,7 +60,7 @@ class ParseController extends Controller
 
     }
     public function addImages(Request $request){
-        $restaurants = Restaurants::where('is_image_added',0)->take(20)->get();
+        $restaurants = Restaurants::where('is_image_added',0)->where('is_deleted',0)->take(100)->get();
         foreach ($restaurants as $restaurant)
         {
             if($restaurant)
@@ -81,9 +81,16 @@ class ParseController extends Controller
                             'restaurant_id'=>$restaurant->id
                         ]);
                     }
-                    $restaurant->is_image_added = 1;
+                    if(count($response['images'])>0)
+                    {
+                        $restaurant->is_image_added = count($response['images']);
+                    }
+                    else
+                    {
+                        $restaurant->is_image_added = 1;
+                    }
+
                     $restaurant->save();
-                    print_r($response);
                 }
                 else
                 {

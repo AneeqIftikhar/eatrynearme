@@ -39,7 +39,7 @@ class Reviews extends Command
      */
     public function handle()
     {
-        $rests = Restaurants::where('is_reviewed', 0)->limit(5)->get();
+        $rests = Restaurants::where('is_reviewed', 0)->where('is_deleted', 0)->limit(5)->get();
 
         foreach ($rests as $key => $r) {
             $curl[$key] = curl_init();

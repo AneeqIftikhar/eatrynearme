@@ -131,7 +131,7 @@ class RestaurantController extends Controller
         if (!is_null($city)) {
             // dd($city);
             $citiesGet = City::where('slug', $city)->where('state_id',$stateGet->id)->first();
-            $data = $citiesGet->restaurants;
+            $data = Restaurants::where('is_deleted',0)->where('city_id', $citiesGet->id)->get();
         }
 
         if (!is_null($restaurant)) {

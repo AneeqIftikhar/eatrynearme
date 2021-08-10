@@ -40,14 +40,21 @@ class addRestaurants extends Command
     public function handle()
     {
 
-        $data = CityListingJson::where('is_copied', 0)->get();
+        $data = CityListingJson::where('is_copied', 0)->with('city')->get();
         foreach ($data as $key => $d) {
 
             // dd($d);
             $restaurants[$key] = json_decode($d->json_dump, true)['results']['data'];
 
             foreach ($restaurants[$key] as $resKey => $restaurant) {
-                // dd();
+                $is_deleted = 0;
+                if(isset($restaurant['location_string']) && !is_null($restaurant['location_string']))
+                {
+                    if(!str_contains($restaurant['location_string'], $d->city->name))
+                    {
+                        $is_deleted = 1;
+                    }
+                }
                 Restaurants::create([
                     'name' => $restaurant['name'],
                     'latitude' => (isset($restaurant['latitude'])) ? $restaurant['latitude'] : null,
@@ -67,6 +74,8 @@ class addRestaurants extends Command
                     'hours' => (isset($restaurant['hours'])) ? json_encode($restaurant['hours']) : null,
                     'image_tripadvisor' => (isset($restaurant['photo']['images']['original']['url'])) ? $restaurant['photo']['images']['original']['url'] : null,
                     'location_id' => $restaurant['location_id'],
+                    'is_deleted' => $is_deleted,
+                    'is_deleted_checked' => 1
                 ]);
             }
             $d->is_copied = 1;
