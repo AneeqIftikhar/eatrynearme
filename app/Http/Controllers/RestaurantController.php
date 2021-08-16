@@ -135,9 +135,9 @@ class RestaurantController extends Controller
         }
 
         if (!is_null($restaurant)) {
-            $getRes = Restaurants::where('slug', $restaurant)->where('city_id', $citiesGet->id)->first();
+            $getRes = Restaurants::where('slug', $restaurant)->where('is_deleted',0)->where('city_id', $citiesGet->id)->first();
 //            dd($getRes->city()->restaurants->limit(10)->get());
-            $related = Restaurants::where('city_id', $getRes->city->id)->where('id','!=', $getRes->id)->limit(5)->get();
+            $related = Restaurants::where('city_id', $getRes->city->id)->where('is_deleted',0)->where('id','!=', $getRes->id)->limit(5)->get();
 
             return view('single-restaurant', compact('data', 'country', 'state', 'city', 'countryName', 'stateName', 'getRes','related'));
             // dd($restaurant);
@@ -197,7 +197,7 @@ class RestaurantController extends Controller
     {
          $cities = City::whereNotNull('location_json_dump')->get();
          for($i = 0; $i<count($cities);$i++){
-           $count = Restaurants::where('city_id', $cities[$i]->id)->count();
+           $count = Restaurants::where('city_id', $cities[$i]->id)->where('is_deleted',0)->count();
            $cities[$i]->restaurant_count = $count;
            $cities[$i]->save();
          }
