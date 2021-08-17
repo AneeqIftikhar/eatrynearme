@@ -12,12 +12,12 @@ class ParseController extends Controller
 {
     public function getData(Request $request)
     {
-       $city = City::where('rapid_api_location_id',NULL)->first();
-       $state = $city->state;
-       $response = json_decode(CurlApi::getLocationId($city->name." ".$city->state->name),1);
-       print_r($response);
-       if(isset($response) && isset($response['results']) && count($response['results']['data'])>0)
-       {
+        $city = City::where('rapid_api_location_id',NULL)->first();
+        $state = $city->state;
+        $response = json_decode(CurlApi::getLocationId($city->name." ".$city->state->name),1);
+        print_r($response);
+        if(isset($response) && isset($response['results']) && count($response['results']['data'])>0)
+        {
             $city->location_json_dump=$response['results']['data'][0];
             $city->rapid_api_location_id=$response['results']['data'][0]['result_object']['location_id'];
             $city->save();
@@ -50,42 +50,62 @@ class ParseController extends Controller
                 echo "Failed";
             }
 
-       }
-       else
-       {
-           echo "City Not found";
-       }
+        }
+        else
+        {
+            echo "City Not found";
+        }
 
 
 
     }
     public function addImages(Request $request){
-        $restaurant = Restaurants::where('is_image_added',0)->first();
-        if($restaurant)
+        $restaurants = Restaurants::where('is_image_added',0)->take(20)->get();
+        foreach ($restaurants as $restaurant)
         {
-            $city = $restaurant->city;
-            $state = $city->state;
-            $response = CurlApi::getGlobeImage(strtolower($state->abv),$city->slug,$restaurant->slug);
-            if($response && $response!='false')
+            if($restaurant)
             {
-                $response = json_decode($response,1);
-                for($i = 0; $i< count($response['image']); $i++)
+                $city = $restaurant->city;
+                $state = $city->state;
+                $response = CurlApi::getGlobeImage(strtolower($state->abv),$city->slug,$restaurant->slug);
+                if($response && $response!='false')
                 {
-                    GlobeImage::create([
-                         'url'=>"https://restaurantsglobe.com/menus/".$response['image'][$i]['url'],
-                         'title'=>$restaurant->name.' - '. $city->name . ' - '. $state->name . ' - Menu | Eatry Near Me',
-                         'alt'=>$restaurant->name.' - '. $city->name . ' - '. $state->name . ' - Menu | Eatry Near Me'
-                     ]);
-                }
-                $restaurant->is_image_added = 1;
-                $restaurant->save();
-            }
-            else
-            {
-                return response()->json([],500);
-            }
 
+                    $response = json_decode($response,1);
+                    for($i = 0; $i< count($response['images']); $i++)
+                    {
+                        GlobeImage::create([
+                            'url'=>"https://restaurantsglobe.com/menus/".$response['images'][$i]['url'],
+                            'title'=>$restaurant->name.' - '. $city->name . ' - '. $state->name . ' - Menu | Eatry Near Me',
+                            'alt'=>$restaurant->name.' - '. $city->name . ' - '. $state->name . ' - Menu | Eatry Near Me',
+                            'restaurant_id'=>$restaurant->id
+                        ]);
+                    }
+                    $restaurant->is_image_added = 1;
+                    $restaurant->save();
+                    print_r($response);
+                }
+                else
+                {
+                    return response()->json([],500);
+                }
+
+            }
         }
 
+
+    }
+    public function isDeleted(Request $request)
+    {
+        $restaurants = Restaurants::where('is_deleted_checked',0)->with('city')->take(1000)->get();
+        foreach ($restaurants as $restaurant)
+        {
+            if(!str_contains($restaurant->location_str, $restaurant->city->name))
+            {
+                $restaurant->is_deleted=true;
+            }
+            $restaurant->is_deleted_checked=true;
+            $restaurant->save();
+        }
     }
 }

@@ -7,11 +7,16 @@ class CurlApi
     {
         $curl = curl_init();
         $url = "http://restaurantsglobe.com/api/getImages/".$state."/".$city."/".$restaurant;
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_POST, TRUE);
-        curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true );
-
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+        ));
         $response = curl_exec($curl);
         $err = curl_error($curl);
 
@@ -103,26 +108,26 @@ class CurlApi
 
     }
 
-	public static function csvToArray($filename = '', $delimiter = ',')
-	{
-	    if (!file_exists($filename) || !is_readable($filename))
-	        return false;
+    public static function csvToArray($filename = '', $delimiter = ',')
+    {
+        if (!file_exists($filename) || !is_readable($filename))
+            return false;
 
-	    $header = null;
-	    $data = array();
-	    if (($handle = fopen($filename, 'r')) !== false)
-	    {
-	        while (($row = fgetcsv($handle, 1000, $delimiter)) !== false)
-	        {
-	            if (!$header)
-	                $header = $row;
-	            else
-	                $data[] = array_combine($header, $row);
-	        }
-	        fclose($handle);
-	    }
+        $header = null;
+        $data = array();
+        if (($handle = fopen($filename, 'r')) !== false)
+        {
+            while (($row = fgetcsv($handle, 1000, $delimiter)) !== false)
+            {
+                if (!$header)
+                    $header = $row;
+                else
+                    $data[] = array_combine($header, $row);
+            }
+            fclose($handle);
+        }
 
-	    return $data;
-	}
+        return $data;
+    }
 }
 

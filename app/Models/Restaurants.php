@@ -39,6 +39,9 @@ class Restaurants extends Model
     public function reviews(){
         return $this->hasOne(Review::class, 'restaurant_id');
     }
+    public function globeImage(){
+        return $this->hasMany(GlobeImage::class, 'restaurant_id');
+    }
     /**
      * Get the restaurants's hours as json.
      *

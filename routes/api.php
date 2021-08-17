@@ -25,3 +25,5 @@ Route::post('addCityRestaurantCount', [App\Http\Controllers\RestaurantController
 Route::post('googleIndexing', [App\Http\Controllers\SitemapController::class, 'googleIndexing']);
 
 Route::post('globeImages', [App\Http\Controllers\ParseController::class, 'addImages']);
+
+Route::post('isDeleted', [App\Http\Controllers\ParseController::class, 'isDeleted']);

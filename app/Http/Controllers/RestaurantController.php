@@ -135,7 +135,7 @@ class RestaurantController extends Controller
         }
 
         if (!is_null($restaurant)) {
-            $getRes = Restaurants::where('slug', $restaurant)->first();
+            $getRes = Restaurants::where('slug', $restaurant)->where('city_id', $citiesGet->id)->first();
 //            dd($getRes->city()->restaurants->limit(10)->get());
             $related = Restaurants::where('city_id', $getRes->city->id)->where('id','!=', $getRes->id)->limit(5)->get();
 

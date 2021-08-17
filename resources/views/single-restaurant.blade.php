@@ -123,10 +123,22 @@
                     @if (!is_null($getRes->image))
 
 
-                    <div class="col-sm-12  text-center mt-5">
-                        <img loading="lazy" src="{{ asset($getRes->image) }}" class="img-fluid" alt="">
-                    </div>
+                        <div class="col-sm-12  text-center mt-5">
+                            <img loading="lazy" src="{{ asset($getRes->image) }}" class="img-fluid" alt="">
+                        </div>
                     @endif
+                    @if (count($getRes->globeImage)>0)
+                        <h2 class="text-center mt-5" >{{$getRes->name}} Menu</h2>
+                        @foreach($getRes->globeImage as $menu)
+
+                        <div class="col-sm-4  text-center mt-3">
+                            <img loading="lazy" src="{{ $menu->url }}" class="img-fluid" title="{{$menu->title}}" alt="{{$menu->alt}}">
+                        </div>
+                        @endforeach
+                    @endif
+                </div>
+                <div class="row">
+
                     <div class="col-sm-12 text-center mt-5" style="display: flex;
                     justify-content: center;">
                         <div class="mapouter">
@@ -159,7 +171,7 @@
             </div>
             <div class="col-sm-4">
                 @if(isset($getRes->hours))
-                    <h2>{{ ucwords($getRes->name) }} Opening Hours</h2>
+                    <h2 class="text-center mt-5" >{{ ucwords($getRes->name) }} Opening Hours</h2>
                     <div class="col-sm-12">
                         <div class="card">
                             <div class="card-body">
@@ -194,7 +206,8 @@
                         </div>
                     </div>
                 @endif
-                <h3>More Restaurants in {{ ucwords($city) }}</h3>
+
+                <h3 class="text-center mt-5">More Restaurants in {{ ucwords($city) }}</h3>
                 @if ($related->count() > 0)
                     @foreach ($related as $r)
                         <div class="col-sm-12">
@@ -294,6 +307,7 @@
                 @endif
             </div>
             @if (isset($getRes->reviews))
+                <h2 class="text-center mt-5" >{{$getRes->name}} Reviews & Ratings</h2>
                 <div class="col-sm-12">
                     @include('partials.review')
                 </div>

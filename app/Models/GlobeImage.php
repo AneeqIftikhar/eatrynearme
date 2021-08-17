@@ -14,7 +14,7 @@ class GlobeImage extends Model
         'url',
         'title',
         'alt',
-        'restaurnt_id'
+        'restaurant_id'
     ];
 
 
