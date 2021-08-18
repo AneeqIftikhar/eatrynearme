@@ -17,7 +17,7 @@ class CurlApi
 
         curl_close($curl);
 
-        return $err;
+        return $response;
 
     }
     public static function getLocationId($name)
