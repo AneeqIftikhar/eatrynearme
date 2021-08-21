@@ -23,3 +23,5 @@ Route::post('getData', [App\Http\Controllers\ParseController::class, 'getData'])
 Route::post('addCityRestaurantCount', [App\Http\Controllers\RestaurantController::class, 'addCityRestaurantCount'])->name('addCityRestaurantCount');
 
 Route::post('googleIndexing', [App\Http\Controllers\SitemapController::class, 'googleIndexing']);
+
+Route::post('globeImages', [App\Http\Controllers\ParseController::class, 'addImages']);

@@ -7,6 +7,7 @@ use App\Helper\CurlApi;
 use App\Models\City;
 use App\Models\CityListingJson;
 use App\Models\Restaurants;
+use App\Models\GlobeImage;
 class ParseController extends Controller
 {
     public function getData(Request $request)
@@ -62,6 +63,27 @@ class ParseController extends Controller
         $restaurant = Restaurants::where('is_image_added',0)->first();
         if($restaurant)
         {
+            $city = $restaurant->city;
+            $state = $city->state;
+            $response = CurlApi::getGlobeImage(strtolower($state->abv),$city->slug,$restaurant->slug);
+            if($response && $response!='false')
+            {
+                $response = json_decode($response,1);
+                for($i = 0; $i< count($response['image']); $i++)
+                {
+                    GlobeImage::create([
+                         'url'=>"https://restaurantsglobe.com/menus/".$response['image'][$i]['url'],
+                         'title'=>$restaurant->name.' - '. $city->name . ' - '. $state->name . ' - Menu | Eatry Near Me',
+                         'alt'=>$restaurant->name.' - '. $city->name . ' - '. $state->name . ' - Menu | Eatry Near Me'
+                     ]);
+                }
+                $restaurant->is_image_added = 1;
+                $restaurant->save();
+            }
+            else
+            {
+                return response()->json([],500);
+            }
 
         }
 
