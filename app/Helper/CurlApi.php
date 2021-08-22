@@ -3,6 +3,29 @@ namespace App\Helper;
 
 class CurlApi
 {
+    public static function getGlobeImage($state,$city,$restaurant)
+    {
+        $curl = curl_init();
+        $url = "https://restaurantsglobe.com/api/getImages/".$state."/".$city."/".$restaurant;
+        curl_setopt_array($curl, [
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "POST",
+        ]);
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        return $response;
+
+    }
     public static function getLocationId($name)
     {
         $curl = curl_init();
@@ -28,7 +51,7 @@ class CurlApi
         $err = curl_error($curl);
 
         curl_close($curl);
-        
+
         return $response;
 
     }
@@ -36,7 +59,7 @@ class CurlApi
     {
         $curl = curl_init();
         $key_array=array("X-RapidAPI-Key: 5d2ef7e115msh5bc06a8bc2edb61p1c27d3jsn4d0c54b8d403","X-RapidAPI-Key: 563cdf46b2msh6781a5cf53add49p1f9192jsne6745b6f273a");
-        
+
         $key = array_rand($key_array);
         if($offset==0)
         {
@@ -76,16 +99,16 @@ class CurlApi
                 ],
             ]);
         }
-        
-        
+
+
         $response = curl_exec($curl);
         $err = curl_error($curl);
-        
+
         curl_close($curl);
         return $response;
 
     }
-    
+
 	public static function csvToArray($filename = '', $delimiter = ',')
 	{
 	    if (!file_exists($filename) || !is_readable($filename))

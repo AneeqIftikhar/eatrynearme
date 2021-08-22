@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Helper\CurlApi;
 use App\Models\City;
 use App\Models\CityListingJson;
+use App\Models\Restaurants;
 class ParseController extends Controller
 {
     public function getData(Request $request)
@@ -31,14 +32,14 @@ class ParseController extends Controller
                 if(count($check_response2['results']['data'])==50)
                 {
                     $response3 = CurlApi::getSearchResult($response['results']['data'][0]['result_object']['location_id'],50);
-    
+
                     CityListingJson::create([
                         'json_dump'=>$response3,
                         'status'=>1,
                         'city_id'=>$city->id
                     ]);
                 }
-    
+
             }
             else
             {
@@ -53,8 +54,16 @@ class ParseController extends Controller
        {
            echo "City Not found";
        }
-       
-       
+
+
+
+    }
+    public function addImages(Request $request){
+        $restaurant = Restaurants::where('is_image_added',0)->first();
+        if($restaurant)
+        {
+
+        }
 
     }
 }
