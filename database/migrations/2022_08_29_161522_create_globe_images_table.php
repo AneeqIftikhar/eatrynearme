@@ -15,6 +15,11 @@ class CreateGlobeImagesTable extends Migration
     {
         Schema::create('globe_images', function (Blueprint $table) {
             $table->id();
+            $table->string('url', 500);
+            $table->string('title', 500);
+            $table->string('alt', 500);
+            $table->unsignedBigInteger('restaurant_id');
+            $table->foreign('restaurant_id')->references('id')->on('restaurants')->onDelete('cascade');
             $table->timestamps();
         });
     }
