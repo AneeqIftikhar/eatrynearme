@@ -3,16 +3,16 @@
         Options -MultiViews
     </IfModule>
 
-    RewriteEngine On
-    RewriteCond %{HTTPS} off
-    RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
-    
-    RewriteBase /
-	RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
-	RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+#    RewriteEngine On
+#    RewriteCond %{HTTPS} off
+#    RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+#
+#    RewriteBase /
+#	RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+#	RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
 
-	
-    
+
+
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
@@ -21,15 +21,15 @@
     RewriteRule ^ ^$1 [N]
 
     RewriteCond %{REQUEST_URI} (\.\w+$) [NC]
-    RewriteRule ^(.*)$ public/$1 
+    RewriteRule ^(.*)$ public/$1
 
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ server.php
 
-    
 
-    
+
+
 </IfModule>
 
 # Add correct content-type for fonts

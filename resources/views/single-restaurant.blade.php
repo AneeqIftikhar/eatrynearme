@@ -49,6 +49,7 @@
                 </div>
             </div>
             <div class="col-sm-8 card p-4">
+
                 <h1>{{ $getRes->name }}</h1>
 
                 <div class="row">
@@ -112,10 +113,16 @@
                     </div>
                 </div>
                 <i>{{ $getRes->address }}</i>
+                @if( $getRes->phone)
+                    <i><a href = "tel:{{ $getRes->phone }}" rel="nofollow">{{ $getRes->phone }}</a></i>
+                @endif
+                @if( $getRes->website)
+                    <i><a href = "{{ $getRes->website }}" target="_blank" rel="nofollow">Visit Website</a></i>
+                @endif
                 <div class="row">
                     @if (!is_null($getRes->image))
-                        
-                    
+
+
                     <div class="col-sm-12  text-center mt-5">
                         <img loading="lazy" src="{{ asset($getRes->image) }}" class="img-fluid" alt="">
                     </div>
@@ -147,11 +154,21 @@
                                 </style>
                             </div>
                         </div>
-                    </div>  
+                    </div>
                 </div>
             </div>
             <div class="col-sm-4">
-                <h4>More Restaurants in {{ ucwords($city) }}</h4>
+                <h3>{{ ucwords($getRes->name) }} Opening Hours</h3>
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">
+
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+                <h3>More Restaurants in {{ ucwords($city) }}</h3>
                 @if ($related->count() > 0)
                     @foreach ($related as $r)
                         <div class="col-sm-12">
