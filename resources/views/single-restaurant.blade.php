@@ -163,8 +163,101 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">
-
+                                Timezone: {{ $getRes->hours->timezone }}
                             </h4>
+                            @foreach($getRes->hours->week_ranges as $key => $range)
+                                @if($key==0)
+                                    <p>Monday:
+                                        @if(isset($range[0]->open_time))
+                                            {{ $range[0]->open_time }}
+                                        @endif
+                                        @if(isset($range[0]->close_time))
+                                            - {{ $range[0]->close_time }}
+                                        @endif
+                                        @if(!isset($range[0]->open_time) && !isset($range[0]->close_time))
+                                            Closed
+                                        @endif
+                                    </p>
+                                @endif
+                                @if($key==1)
+                                    <p>Tuesday:
+                                        @if(isset($range[0]->open_time))
+                                            {{ $range[0]->open_time }}
+                                        @endif
+                                        @if(isset($range[0]->close_time))
+                                            - {{ $range[0]->close_time }}
+                                        @endif
+                                        @if(!isset($range[0]->open_time) && !isset($range[0]->close_time))
+                                            Closed
+                                        @endif
+                                    </p>
+                                @endif
+                                @if($key==2)
+                                    <p>Wednesday:
+                                        @if(isset($range[0]->open_time))
+                                            {{ $range[0]->open_time }}
+                                        @endif
+                                        @if(isset($range[0]->close_time))
+                                            - {{ $range[0]->close_time }}
+                                        @endif
+                                        @if(!isset($range[0]->open_time) && !isset($range[0]->close_time))
+                                            Closed
+                                        @endif
+                                    </p>
+                                @endif
+                                @if($key==3)
+                                    <p>Thursday:
+                                        @if(isset($range[0]->open_time))
+                                            {{ $range[0]->open_time }}
+                                        @endif
+                                        @if(isset($range[0]->close_time))
+                                            - {{ $range[0]->close_time }}
+                                        @endif
+                                        @if(!isset($range[0]->open_time) && !isset($range[0]->close_time))
+                                            Closed
+                                        @endif
+                                    </p>
+                                @endif
+                                @if($key==4)
+                                    <p>Friday:
+                                        @if(isset($range[0]->open_time))
+                                            {{ $range[0]->open_time }}
+                                        @endif
+                                        @if(isset($range[0]->close_time))
+                                            - {{ $range[0]->close_time }}
+                                        @endif
+                                        @if(!isset($range[0]->open_time) && !isset($range[0]->close_time))
+                                            Closed
+                                        @endif
+                                    </p>
+                                @endif
+                                @if($key==5)
+                                    <p>Saturday:
+                                        @if(isset($range[0]->open_time))
+                                            {{ $range[0]->open_time }}
+                                        @endif
+                                        @if(isset($range[0]->close_time))
+                                            - {{ $range[0]->close_time }}
+                                        @endif
+                                        @if(!isset($range[0]->open_time) && !isset($range[0]->close_time))
+                                            Closed
+                                        @endif
+                                    </p>
+                                @endif
+                                @if($key==6)
+                                    <p>Sunday:
+                                        @if(isset($range[0]->open_time))
+                                            {{ $range[0]->open_time }}
+                                        @endif
+                                        @if(isset($range[0]->close_time))
+                                            - {{ $range[0]->close_time }}
+                                        @endif
+                                        @if(!isset($range[0]->open_time) && !isset($range[0]->close_time))
+                                            Closed
+                                        @endif
+                                    </p>
+                                @endif
+                            @endforeach
                         </div>
                     </div>
                 </div>

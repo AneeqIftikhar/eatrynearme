@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
 class Restaurants extends Model
 {
     use HasFactory;
@@ -38,4 +39,15 @@ class Restaurants extends Model
     public function reviews(){
         return $this->hasOne(Review::class, 'restaurant_id');
     }
+    /**
+     * Get the restaurants's hours as json.
+     *
+     * @param  string  $value
+     * @return json
+     */
+    public function getHoursAttribute($value)
+    {
+        return json_decode($value);
+    }
+
 }

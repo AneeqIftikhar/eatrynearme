@@ -192,7 +192,7 @@ class RestaurantController extends Controller
             }
         }
     }
-    
+
     public function addCityRestaurantCount()
     {
          $cities = City::whereNotNull('location_json_dump')->get();
